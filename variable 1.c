@@ -17,4 +17,3 @@ void main()
     printf("sexe: %s \n", sexe);
     printf("email: %s \n", email);
 }
-    
