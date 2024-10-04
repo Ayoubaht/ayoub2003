@@ -1,0 +1,114 @@
+#include <stdio.h>
+#define MAXRESERVATIONS 100
+char noms[MAXRESERVATIONS][100];
+char prenoms[MAXRESERVATIONS][100];
+char telephones[MAXRESERVATIONS][100];
+int ages[MAXRESERVATIONS];
+char statuts[MAXRESERVATIONS][100];
+int references[MAXRESERVATIONS];
+char dates_reservation[MAXRESERVATIONS][100];
+int reservation_client = 0;
+void Ajouter_une_reservation() {
+    if (reservation_client >= MAXRESERVATIONS) {
+        printf("Impossible d'ajouter une réservation.\n");
+        return;
+    }
+    printf("Entrez le nom: ");
+    scanf("%s", noms[reservation_client]);
+    printf("Entrez le prénom: ");
+    scanf("%s", prenoms[reservation_client]);
+    printf("Entrez le téléphone: ");
+    scanf("%s", telephones[reservation_client]);
+    printf("Entrez l'age: ");
+    scanf("%d", &ages[reservation_client]);
+    printf("Entrez le statut: ");
+    scanf("%s", statuts[reservation_client]);
+    printf("Entrez la référence: ");
+    scanf("%d", &references[reservation_client]);
+    printf("Entrez la date de réservation (format jj/mm/aaaa): ");
+    scanf("%s", dates_reservation[reservation_client]);
+    reservation_client++;
+    printf("La réservation ajoutée.\n");
+}
+void afficher_reservations() {
+    if (reservation_client == 0) {
+        printf("Aucune réservation afficher.\n");
+        return;
+    }
+    printf("Réservations ajoutées:\n");
+    for (int i = 0; i < reservation_client; i++) {
+        printf("Référence: %d. Nom: %s, Prénom: %s,Téléphone: %s,Age: %d, Statut: %s, Date de réservation: %s\n",
+               i + 1, noms[i], prenoms[i], telephones[i], ages[i], statuts[i], dates_reservation[i]);
+    }
+}
+void modifier_reservation() {
+    int reference;
+    printf("Entrez la référence de la réservation à modifier: ");
+    scanf("%d", &reference);
+    for (int i = 0; i < reservation_client; i++) {
+        if (references[i] == reference) {
+            printf("Modifier les informations pour la réservation %d:\n", reference);
+            printf("Entrez le nouveau nom: ");
+            scanf("%s", noms[i]);
+            printf("Entrez le nouveau prénom: ");
+            scanf("%s", prenoms[i]);
+            printf("Entrez le nouveau téléphone: ");
+            scanf("%s", telephones[i]);
+            printf("Entrez le nouvel âge: ");
+            scanf("%d", &ages[i]);
+            printf("Entrez le nouveau statut: ");
+            scanf("%s", statuts[i]);
+            printf("Réservation modifiée !\n");
+            return;
+        }
+    }
+    printf("Réservation non trouvée.\n");
+}
+void rechercher_par_reference() {
+    int reference;
+    printf("Entrez la référence de la réservation à rechercher: ");
+    scanf("%d", &reference);
+    for (int i = 0; i < reservation_client; i++) {
+        if (references[i] == reference) {
+            printf("Réservation trouvée:\n");
+            printf("Référence: %d, Nom: %s, Prénom: %s, Téléphone: %s, Âge: %d, Statut: %s, Date: %s\n",
+                   reference, noms[i], prenoms[i], telephones[i], ages[i], statuts[i], dates_reservation[i]);
+            return;
+        }
+    }
+    printf("Réservation non trouvée.\n");
+}
+int main() {
+    int choix;
+    do {
+        printf("Menu:\n");
+        printf("1. Ajouter une réservation\n");
+        printf("2. Modifier une réservation\n");
+        printf("3. Afficher les réservations\n");
+        printf("4. Rechercher une réservation par référence\n");
+        printf("5. Quitter\n");
+        printf("Choisissez une option: ");
+        scanf("%d", &choix);
+        switch (choix) {
+            case 1:
+                Ajouter_une_reservation();
+                break;
+            case 2:
+                modifier_reservation();
+                break;
+            case 3: 
+                afficher_reservations();
+                break;
+            case 4:
+                rechercher_par_reference();
+                break;
+            case 5:
+                printf("Merci d'utilisé le programme.\n");
+                break;
+            default:
+                printf("Option invalide.\n"); //fonction indisponible
+        }
+    } while (choix != 5); 
+
+    return 0;
+}
